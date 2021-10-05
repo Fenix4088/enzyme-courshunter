@@ -1,10 +1,13 @@
+import React from 'react';
 import './App.css';
+import { ClickCounter } from "./components/ClickCounter/ClickCounter";
 
 function App() {
+  const [count, setCount] = React.useState(0);
+
   return (
-    <div className='App'>
-      <div className="App2"/>
-      <h1>Learn react</h1>
+    <div>
+      <ClickCounter/>
     </div>
   );
 }
