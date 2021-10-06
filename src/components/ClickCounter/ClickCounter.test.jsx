@@ -1,6 +1,7 @@
 import {configure, shallow} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import {ClickCounter} from './ClickCounter';
+import { findByTestAttr } from '../../utils/utilsForTesting';
 
 configure({adapter: new Adapter()});
 
@@ -11,8 +12,6 @@ configure({adapter: new Adapter()});
 * @returns {ShallowWrapper}
 **/
 const setUp = () => shallow(<ClickCounter/>);
-
-const findByTestAttr = (wrapper, attr) => wrapper.find(`[data-test='${attr}']`);
 
 describe('ClickCounter', () => {
     let wrapper;
