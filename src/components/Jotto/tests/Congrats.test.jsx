@@ -1,8 +1,7 @@
-import { configure, shallow } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import { shallow } from 'enzyme';
 import Congrats from '../components/Congrats';
+import { findByTestAttr } from '../../../utils/utilsForTesting';
 
-configure({ adapter: new Adapter() });
 
 const setUp = (props) => shallow(<Congrats {...props} />);
 
@@ -16,13 +15,16 @@ describe('Congrats component', () => {
     wrapperFalsy = setUp({ success: false });
   });
 
-  it('should renders without error', () => {
-
+  it('renders without error', () => {
+    const component = findByTestAttr(wrapperTruthy, 'component-congrats');
+    expect(component.length).toBe(1);
   });
-  it('should renders no text when "success" prop is false', () => {
-
+  it('renders no text when `success` prop is false', () => {
+    const component = findByTestAttr(wrapperFalsy, 'component-congrats');
+    expect(component.text()).toBe('');
   });
-  it('should renders non-empty congrats message when "success"', () => {
-
+  it('renders non-empty congrats message when `success` prop is true', () => {
+    const message = findByTestAttr(wrapperTruthy, 'congrats-message');
+    expect(message.text().length).not.toBe(0);
   });
 });
