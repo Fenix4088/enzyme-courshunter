@@ -1,15 +1,15 @@
-import { configure, shallow } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import App from './App';
+import { findByTestAttr, setUp } from './utils/utilsForTesting';
 
-configure({ adapter: new Adapter() });
 
-describe('app test', () => {
+describe('app', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<App />);
+    wrapper = setUp(App)
+  })
+
+  it('renders without error', () => {
+    const app = findByTestAttr(wrapper, 'component-app');
+    expect(app).toHaveLength(1);
   });
-  it('renders non-empty component without crashing', () => {
-    expect(wrapper.exists()).toBeTruthy()
-  });
-});
+})

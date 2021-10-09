@@ -3,15 +3,14 @@ import Congrats from './Congrats';
 import GuessedWords from './GuessedWords';
 import Input from './Input';
 
-export const Jotto = () => {
-
-  const [guessedWords, setGuessedWords] = useState([{ guessedWord: 'train', letterMatchCount: 3 }]);
+export const Jotto = (props) => {
+  const { success, secretWord, guessedWords } = props;
 
   return (
     <div>
       <h1>Jotto</h1>
-      <Congrats success={true} />
-      <Input secretWord={'test'} success={false}/>
+      <Congrats success={success} />
+      <Input secretWord={secretWord} success={success} />
       <GuessedWords guessedWords={guessedWords} />
     </div>
   );
