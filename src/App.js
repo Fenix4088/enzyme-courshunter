@@ -1,13 +1,14 @@
 import React from 'react';
 import './App.css';
 import { ClickCounter } from "./components/ClickCounter/ClickCounter";
+import { Jotto } from './components/Jotto/components/Jotto';
 
 function App() {
-  const [count, setCount] = React.useState(0);
 
   return (
     <div>
       <ClickCounter/>
+      <Jotto/>
     </div>
   );
 }
