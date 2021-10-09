@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getLetterMatchCount } from '../../../helpers/helpers';
 
 
 function Input({ success, secretWord }) {
@@ -40,5 +41,4 @@ Input.propTypes = {
   secretWord: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired
 };
-
 export default Input;

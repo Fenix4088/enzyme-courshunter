@@ -11,7 +11,7 @@ export const Jotto = () => {
     <div>
       <h1>Jotto</h1>
       <Congrats success={true} />
-      <Input secretWord={'test'}/>
+      <Input secretWord={'test'} success={false}/>
       <GuessedWords guessedWords={guessedWords} />
     </div>
   );
