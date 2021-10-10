@@ -1,19 +1,45 @@
-import App from './App';
-import { findByTestAttr, setUp } from './utils/utilsForTesting';
+import { findByTestAttr } from './utils/utilsForTesting';
+import { mount } from 'enzyme';
 import { getSecretWord as mockGetSecretWord } from './actions';
+import { Jotto } from './components/Jotto/components/Jotto';
 
 //activate global mock to make sure getSecretWord dosen't make network call
 jest.mock('./actions');
 
+const setUp = () => mount(<Jotto />);
 
 describe('app', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = setUp(App);
+    wrapper = setUp();
   });
 
   it('renders without error', () => {
-    const app = findByTestAttr(wrapper, 'component-app');
+    const app = findByTestAttr(wrapper, 'jotto-app');
     expect(app).toHaveLength(1);
+  });
+});
+
+describe('get secret word', () => {
+
+  beforeEach(() => {
+    //clear the mock calls from prev test
+    mockGetSecretWord.mockClear();
+  });
+
+  it('get secret word on app mount', () => {
+    const wrapper = setUp();
+
+    expect(mockGetSecretWord).toHaveBeenCalledTimes(1);
+  });
+
+  it('get secret word doesnt run on app mount', () => {
+    const wrapper = setUp();
+    mockGetSecretWord.mockClear();
+
+    //it will run useEffect
+    wrapper.setProps();
+    expect(mockGetSecretWord).toHaveBeenCalledTimes(0);
+
   });
 });
