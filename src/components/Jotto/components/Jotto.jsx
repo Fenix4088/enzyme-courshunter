@@ -22,7 +22,7 @@ export const Jotto = () => {
     <div data-test={'jotto-app'}>
       <h1>Jotto</h1>
       <Congrats success={success} />
-      <Input secretWord={secretWord} success={success} />
+      <Input secretWord={secretWord} />
       <GuessedWords guessedWords={guessedWords} />
     </div>
   );

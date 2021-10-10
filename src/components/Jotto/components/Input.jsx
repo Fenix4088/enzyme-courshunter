@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getLetterMatchCount } from '../../../helpers/helpers';
+import { useSelector } from 'react-redux';
 
 
-function Input({ success, secretWord }) {
+function Input({ secretWord }) {
   const [currentGuess, setCurrentGuess] = React.useState('');
+  const success = useSelector(state => state.successReducer.success);
 
   if (success) {
     return <div data-test='component-input' />;
@@ -39,6 +40,6 @@ function Input({ success, secretWord }) {
 
 Input.propTypes = {
   secretWord: PropTypes.string.isRequired,
-  success: PropTypes.bool.isRequired
+  // success: PropTypes.bool.isRequired
 };
 export default Input;
