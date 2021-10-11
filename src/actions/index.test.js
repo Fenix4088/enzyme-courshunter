@@ -1,12 +1,12 @@
 import moxios from 'moxios';
-import { actionTypes, correctGuess, getSecretWord } from './index';
+import { getSecretWord } from './index';
 
-describe('correctGuess', () => {
-  it('should return and object with type `CORRECT_GUESS`', () => {
-    const action = correctGuess();
-    expect(action).toStrictEqual({ type: actionTypes.CORRECT_GUESS });
-  });
-})
+// describe('correctGuess', () => {
+//   it('should return and object with type `CORRECT_GUESS`', () => {
+//     const action = correctGuess();
+//     expect(action).toStrictEqual({ type: actionTypes.CORRECT_GUESS });
+//   });
+// })
 
 describe('getSecretWord', () => {
   beforeEach(() => {
