@@ -1,6 +1,7 @@
 import { shallow } from 'enzyme';
 import { rootReducer } from '../reducers/root';
-import { createStore } from 'redux';
+import {applyMiddleware, createStore} from 'redux';
+import {middlewares} from "../reducers/configureStore";
 
 /**
  * Return node(s) with the given data-test attribute.
@@ -13,5 +14,5 @@ export const findByTestAttr = (wrapper, attr) => wrapper.find(`[data-test='${att
 export const setUp = (Component, defaultProps = {}, props = {}) => shallow(<Component {...defaultProps} { ...props}/>)
 
 export const storeFactory =  (initialState) => {
-  return createStore(rootReducer, initialState);
+  return createStore(rootReducer, initialState, applyMiddleware(...middlewares));
 }
