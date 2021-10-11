@@ -1,12 +1,16 @@
-import { findByTestAttr } from './utils/utilsForTesting';
+import {findByTestAttr, storeFactory} from './utils/utilsForTesting';
 import { mount } from 'enzyme';
 import { getSecretWord as mockGetSecretWord } from './actions';
 import { Jotto } from './components/Jotto/components/Jotto';
+import {Provider} from "react-redux";
 
 //activate global mock to make sure getSecretWord dosen't make network call
 jest.mock('./actions');
 
-const setUp = () => mount(<Jotto />);
+const setUp = (initialState = {}) => {
+  const store = storeFactory(initialState);
+  return mount(<Provider store={store}><Jotto/></Provider>)
+};
 
 describe('app', () => {
   let wrapper;
