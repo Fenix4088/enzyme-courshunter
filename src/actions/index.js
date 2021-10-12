@@ -13,7 +13,7 @@ export const actionTypes = {
 // }
 
 export const guessWord = (guessedWord) => (dispatch, getState) => {
-
+  dispatch({type: actionTypes.GUESS_WORD, guessedWord})
 };
 
 export const getSecretWord = () => {
