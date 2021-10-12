@@ -15,7 +15,7 @@ export const guessedWordsReducer = (state = initialState, action) => {
     case (actionTypes.GUESS_WORD): {
       return {
         ...state,
-        guessedWords: [...state.guessedWords, action.guessedWord]
+        guessedWords: [...state.guessedWords, action.payload]
       }
     }
     default:

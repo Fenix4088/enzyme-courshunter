@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getLetterMatchCount } from '../helpers/helpers';
 
 
 export const actionTypes = {
@@ -6,14 +7,20 @@ export const actionTypes = {
   GUESS_WORD: 'GUESS_WORD',
 };
 
-// export function correctGuess() {
-//   return {
-//     type: actionTypes.CORRECT_GUESS
-//   };
-// }
+export function correctGuess() {
+  return {
+    type: actionTypes.CORRECT_GUESS,
+  };
+}
 
 export const guessWord = (guessedWord) => (dispatch, getState) => {
-  dispatch({type: actionTypes.GUESS_WORD, guessedWord})
+  const { secretWord } = getState().secretWordReducer;
+  const letterMatchCount = getLetterMatchCount(guessedWord, secretWord);
+  dispatch({ type: actionTypes.GUESS_WORD, payload: { guessedWord, letterMatchCount } });
+
+  if (guessedWord === secretWord) {
+    dispatch(correctGuess());
+  }
 };
 
 export const getSecretWord = () => {
