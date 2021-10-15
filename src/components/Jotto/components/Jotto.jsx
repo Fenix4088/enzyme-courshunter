@@ -3,16 +3,19 @@ import Congrats from './Congrats';
 import GuessedWords from './GuessedWords';
 import Input from './Input';
 import { getSecretWord } from '../../../actions';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const Jotto = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getSecretWord());
+  }, [dispatch]);
+
   const success = useSelector(state => state.successReducer.success);
   const secretWord = useSelector(state => state.secretWordReducer.secretWord);
   const guessedWords = useSelector(state => state.guessedWordsReducer.guessedWords);
 
-  useEffect(() => {
-    getSecretWord();
-  }, []);
 
   return (
     <div data-test={'jotto-app'}>
