@@ -28,6 +28,9 @@ function Input({ secretWord }) {
           data-test='submit-button'
           onClick={(evt) => {
             evt.preventDefault();
+            //TODO: how to test this condition
+            if(!currentGuess.trim()) return;
+
             dispatch(guessWord(currentGuess));
             setCurrentGuess('');
           }}

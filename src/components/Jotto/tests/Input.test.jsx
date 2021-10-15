@@ -29,7 +29,7 @@ describe('Input comp', () => {
 
       let wrapper;
       beforeEach(() => {
-        wrapper = setup({ successReducer: {success: true} });
+        wrapper = setup({ successReducer: { success: true } });
       });
 
       it('should renders without errors', function() {
@@ -53,7 +53,7 @@ describe('Input comp', () => {
     describe('success is false', () => {
       let wrapper;
       beforeEach(() => {
-        wrapper = setup({ successReducer: {success: false} });
+        wrapper = setup({ successReducer: { success: false } });
       });
 
       it('input box should be hidden', () => {
@@ -72,6 +72,7 @@ describe('Input comp', () => {
   describe('state controlled input field', () => {
     let wrapper;
     let mockEvent;
+    let mockEmptyEvent;
     let mockSetCurrentGuess = jest.fn();
     let originalState;
 
@@ -79,9 +80,10 @@ describe('Input comp', () => {
       mockSetCurrentGuess.mockClear();
 
       mockEvent = { target: { value: 'train' } };
+      mockEmptyEvent = { target: { value: ' ' } };
       originalState = React.useState;
       React.useState = jest.fn(() => ['', mockSetCurrentGuess]);
-      wrapper = setup({ successReducer: {success: false} });
+      wrapper = setup({ successReducer: { success: false } });
     });
 
     afterEach(() => {
@@ -110,8 +112,22 @@ describe('Input comp', () => {
         },
       });
 
-      expect(mockSetCurrentGuess).toHaveBeenCalledWith('');
+      expect(mockSetCurrentGuess).toHaveBeenCalledWith('train');
     });
+
+    // it('should not invoke on submitClick if input value is false', () => {
+    //   mockSetCurrentGuess.mockClear(); // ??
+    //
+    //   const inputBox = findByTestAttr(wrapper, 'input-box');
+    //   inputBox.simulate('change', mockEmptyEvent);
+    //
+    //   const submitBtn = findByTestAttr(wrapper, 'submit-button');
+    //   submitBtn.simulate('click', {
+    //     preventDefault: () => {}
+    //   })
+    //
+    //   expect(mockSetCurrentGuess).toHaveBeenCalledTimes(0)
+    // });
   });
 
 });

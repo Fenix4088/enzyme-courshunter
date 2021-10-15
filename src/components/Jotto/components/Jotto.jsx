@@ -4,6 +4,7 @@ import GuessedWords from './GuessedWords';
 import Input from './Input';
 import { getSecretWord } from '../../../actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { NumberOfGuesses } from './NumberOfGuesses';
 
 export const Jotto = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,9 @@ export const Jotto = () => {
       <Congrats success={success} />
       <Input secretWord={secretWord} />
       <GuessedWords guessedWords={guessedWords} />
+      <NumberOfGuesses numberOfGuesses={guessedWords.length}/>
     </div>
   );
 };
+
+
