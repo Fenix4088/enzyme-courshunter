@@ -5,12 +5,25 @@ import { getLetterMatchCount } from '../helpers/helpers';
 export const actionTypes = {
   CORRECT_GUESS: 'CORRECT_GUESS',
   GUESS_WORD: 'GUESS_WORD',
-  SET_SECRET_WORD: 'SET_SECRET_WORD'
+  SET_SECRET_WORD: 'SET_SECRET_WORD',
+  RESET_GUESSED_WORDS: 'RESET_GUESSED_WORDS',
+  RESET_SUCCESS_STATUS: 'RESET_SUCCESS_STATUS',
 };
 
 export function correctGuess() {
   return {
     type: actionTypes.CORRECT_GUESS,
+  };
+}
+
+export function resetGuessedWords() {
+  return {
+    type: actionTypes.RESET_GUESSED_WORDS,
+  };
+}
+export function resetSuccessStatus() {
+  return {
+    type: actionTypes.RESET_SUCCESS_STATUS,
   };
 }
 

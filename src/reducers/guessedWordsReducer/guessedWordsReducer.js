@@ -1,7 +1,7 @@
 import { actionTypes } from '../../actions';
 
 const initialState = {
-  guessedWords: []
+  guessedWords: [],
 };
 
 /**
@@ -15,8 +15,14 @@ export const guessedWordsReducer = (state = initialState, action) => {
     case (actionTypes.GUESS_WORD): {
       return {
         ...state,
-        guessedWords: [...state.guessedWords, action.payload]
-      }
+        guessedWords: [...state.guessedWords, action.payload],
+      };
+    }
+    case (actionTypes.RESET_GUESSED_WORDS): {
+      return {
+        ...state,
+        guessedWords: [],
+      };
     }
     default:
       return state;

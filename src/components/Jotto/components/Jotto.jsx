@@ -20,6 +20,7 @@ export const Jotto = () => {
 
   return (
     <div data-test={'jotto-app'}>
+      <div>{secretWord}</div>
       <h1>Jotto</h1>
       <Congrats success={success} />
       <Input secretWord={secretWord} />
@@ -28,5 +29,3 @@ export const Jotto = () => {
     </div>
   );
 };
-
-
