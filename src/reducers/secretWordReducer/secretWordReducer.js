@@ -1,3 +1,5 @@
+import { actionTypes } from '../../actions';
+
 const initialState = {
   secretWord: ''
 };
@@ -10,6 +12,12 @@ const initialState = {
  */
 export const secretWordReducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.SET_SECRET_WORD: {
+      return {
+        ...state,
+        secretWord: action.secretWord
+      }
+    }
     default:
       return state;
   }
