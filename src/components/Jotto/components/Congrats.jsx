@@ -18,7 +18,6 @@ const Congrats = (props) => {
           Congratulations! You guessed the word!
         </span>
         </div>
-        <NewWordBtn/>
       </>
 
     );

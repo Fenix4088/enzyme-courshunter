@@ -74,7 +74,10 @@ describe('NewWordBtn', () => {
           {guessedWord: 'elephant', letterMatchCount: 3},
           {guessedWord: 'baby', letterMatchCount: 5},
         ]
-      }
+      },
+      giveUpReducer: {
+        giveUp: false,
+      },
     }
     let store;
     let expectedState;
@@ -90,6 +93,7 @@ describe('NewWordBtn', () => {
         }
       }
       store.dispatch(resetSuccessStatus());
+
       expect(store.getState()).toEqual(expectedState);
     });
     it('should clear guessedWords array', () => {

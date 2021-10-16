@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { getSecretWord, resetGuessedWords, resetSuccessStatus } from '../../../actions';
+import { getSecretWord, resetGuessedWords, resetSuccessStatus, setGiveUp } from '../../../actions';
 import React from 'react';
 
 export const NewWordBtn = () => {
@@ -8,6 +8,7 @@ export const NewWordBtn = () => {
     dispatch(getSecretWord());
     dispatch(resetGuessedWords());
     dispatch(resetSuccessStatus());
+    dispatch(setGiveUp(false));
   };
 
   return (

@@ -8,6 +8,7 @@ export const actionTypes = {
   SET_SECRET_WORD: 'SET_SECRET_WORD',
   RESET_GUESSED_WORDS: 'RESET_GUESSED_WORDS',
   RESET_SUCCESS_STATUS: 'RESET_SUCCESS_STATUS',
+  SET_GIVE_UP_STATUS: 'SET_GIVE_UP_STATUS',
 };
 
 export function correctGuess() {
@@ -25,6 +26,13 @@ export function resetSuccessStatus() {
   return {
     type: actionTypes.RESET_SUCCESS_STATUS,
   };
+}
+
+export const setGiveUp = (payload) => {
+  return {
+    type: actionTypes.SET_GIVE_UP_STATUS,
+    payload
+  }
 }
 
 export const guessWord = (guessedWord) => (dispatch, getState) => {

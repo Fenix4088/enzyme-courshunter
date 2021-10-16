@@ -1,5 +1,5 @@
 import { storeFactory } from '../../../utils/utilsForTesting';
-import { guessWord } from '../../../actions';
+import { guessWord, setGiveUp } from '../../../actions';
 
 describe('guessWord action dispatcher', () => {
   const secretWord = 'party';
@@ -9,7 +9,11 @@ describe('guessWord action dispatcher', () => {
   describe('no guessed words', () => {
 
     let store;
-    let initialState = { secretWordReducer: { secretWord } };
+    let initialState = {
+      secretWordReducer: { secretWord }, giveUpReducer: {
+        giveUp: false,
+      },
+    };
 
     beforeEach(() => {
       store = storeFactory(initialState);
@@ -57,6 +61,9 @@ describe('guessWord action dispatcher', () => {
     const guessedWords = [{ guessedWord: 'agile', letterMatchCount: 1 }];
     const initialState = {
       secretWordReducer: { secretWord },
+      giveUpReducer: {
+        giveUp: false,
+      },
       guessedWordsReducer: {
         guessedWords,
       },
@@ -83,6 +90,9 @@ describe('guessWord action dispatcher', () => {
         guessedWordsReducer: {
           guessedWords: [...guessedWords, guess],
         },
+        giveUpReducer: {
+          giveUp: false,
+        },
       };
 
       const newState = store.getState();
@@ -106,9 +116,18 @@ describe('guessWord action dispatcher', () => {
             guess,
           ],
         },
+        giveUpReducer: {
+          giveUp: false,
+        },
       };
 
       expect(newState).toEqual(expectedState);
+    });
+
+    it('should change give upStatus', () => {
+      store.dispatch(setGiveUp(true));
+      const { giveUp } = store.getState().giveUpReducer;
+      expect(giveUp).toBeTruthy();
     });
   });
 });

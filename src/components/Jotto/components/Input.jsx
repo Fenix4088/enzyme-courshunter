@@ -2,12 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { guessWord } from '../../../actions';
+import { GiveUpBtn } from './GiveUpBtn';
 
 
 function Input({ secretWord }) {
   const dispatch = useDispatch();
   const [currentGuess, setCurrentGuess] = React.useState('');
   const success = useSelector(state => state.successReducer.success);
+  const giveUp = useSelector(state => state.giveUpReducer.giveUp);
+  const guessedWords = useSelector(state => state.guessedWordsReducer.guessedWords);
+
+
 
   if (success) {
     return <div data-test='component-input' />;
@@ -16,28 +21,32 @@ function Input({ secretWord }) {
   return (
     <div data-test='component-input'>
       <form className='form-inline'>
-        <input
-          data-test='input-box'
-          className='mb-2 mx-sm-3'
-          type='text'
-          placeholder='enter guess'
-          value={currentGuess}
-          onChange={(event) => setCurrentGuess(event.target.value)}
-        />
-        <button
-          data-test='submit-button'
-          onClick={(evt) => {
-            evt.preventDefault();
-            //TODO: how to test this condition
-            if(!currentGuess.trim()) return;
+        {!giveUp && <>
+          <input
+            data-test='input-box'
+            className='mb-2 mx-sm-3'
+            type='text'
+            placeholder='enter guess'
+            value={currentGuess}
+            onChange={(event) => setCurrentGuess(event.target.value)}
+          />
+          <button
+            data-test='submit-button'
+            onClick={(evt) => {
+              evt.preventDefault();
+              //TODO: how to test this condition
+              if (!currentGuess.trim()) return;
 
-            dispatch(guessWord(currentGuess));
-            setCurrentGuess('');
-          }}
-          className='btn btn-primary mb-2'
-        >
-          Submit
-        </button>
+              dispatch(guessWord(currentGuess));
+              setCurrentGuess('');
+            }}
+            className='btn btn-primary mb-2'
+          >
+            Submit
+          </button>
+
+          {!success && guessedWords.length > 0 && <GiveUpBtn />}
+        </>}
       </form>
     </div>
   );
@@ -48,3 +57,4 @@ Input.propTypes = {
   // success: PropTypes.bool.isRequired
 };
 export default Input;
+
