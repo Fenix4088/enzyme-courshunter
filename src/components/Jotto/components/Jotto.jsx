@@ -8,6 +8,8 @@ import { NumberOfGuesses } from './NumberOfGuesses';
 import { GivUpMessage } from './GivUpMessage';
 import { NewWordBtn } from './NewWordBtn';
 import { EnterWordForm } from './EnterWordForm';
+import * as propTypes from 'prop-types';
+import { serverErrorReducer } from '../../../reducers/serverErrorReducer/serverErrorReducer';
 
 export const Jotto = () => {
   const dispatch = useDispatch();
@@ -20,10 +22,13 @@ export const Jotto = () => {
   const secretWord = useSelector(state => state.secretWordReducer.secretWord);
   const guessedWords = useSelector(state => state.guessedWordsReducer.guessedWords);
   const giveUp = useSelector(state => state.giveUpReducer.giveUp);
+  const error = useSelector(state => state.serverErrorReducer);
+
 
 
   return (
     <div data-test={'jotto-app'}>
+      {error.isServerError && <Alert message={error.message} />}
       <div>{secretWord}</div>
       <h1>Jotto</h1>
       <Congrats success={success} />
@@ -36,5 +41,16 @@ export const Jotto = () => {
     </div>
   );
 };
+
+
+export const Alert = ({message}) => {
+  return (
+    <div className="alert alert-danger" role="alert">{message}</div>
+  );
+};
+
+Alert.propTypes = {
+  message: propTypes.string.isRequired
+}
 
 

@@ -10,6 +10,7 @@ export const actionTypes = {
   RESET_SUCCESS_STATUS: 'RESET_SUCCESS_STATUS',
   SET_GIVE_UP_STATUS: 'SET_GIVE_UP_STATUS',
   SET_CUSTOM_SECRET_WORD: 'SET_CUSTOM_SECRET_WORD',
+  SET_SERVER_ERROR: 'SET_SERVER_ERROR',
 };
 
 export function correctGuess() {
@@ -30,6 +31,7 @@ export function resetSuccessStatus() {
   };
 }
 
+
 export const setGiveUp = (payload) => {
   return {
     type: actionTypes.SET_GIVE_UP_STATUS,
@@ -40,8 +42,22 @@ export const setGiveUp = (payload) => {
 export const setCustomSecretWord = (payload) => {
   return {
     type: actionTypes.SET_CUSTOM_SECRET_WORD,
-    payload
-  }
+    payload,
+  };
+};
+
+/**
+ *
+ * @param {object} payload
+ * @param {boolean} payload.status
+ * @param {string} payload.message
+ * @returns {{payload, type: string}}
+ */
+export const setServerError = (payload) => {
+  return {
+    type: actionTypes.SET_SERVER_ERROR,
+    payload,
+  };
 };
 
 export const guessWord = (guessedWord) => (dispatch, getState) => {
@@ -57,5 +73,7 @@ export const guessWord = (guessedWord) => (dispatch, getState) => {
 export const getSecretWord = () => (dispatch) => {
   return axios.get('http://localhost:3030').then(res => {
     dispatch({ type: actionTypes.SET_SECRET_WORD, secretWord: res.data });
+  }).catch(e => {
+    dispatch(setServerError({status: true, message: e.message}));
   });
 };

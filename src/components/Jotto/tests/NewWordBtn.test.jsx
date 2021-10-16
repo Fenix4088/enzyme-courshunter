@@ -78,6 +78,10 @@ describe('NewWordBtn', () => {
       giveUpReducer: {
         giveUp: false,
       },
+      serverErrorReducer: {
+        isServerError: false,
+        message: ''
+      }
     }
     let store;
     let expectedState;

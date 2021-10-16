@@ -1,5 +1,6 @@
 import { storeFactory } from '../../../utils/utilsForTesting';
 import { guessWord, setGiveUp } from '../../../actions';
+import { serverErrorReducer } from '../../../reducers/serverErrorReducer/serverErrorReducer';
 
 describe('guessWord action dispatcher', () => {
   const secretWord = 'party';
@@ -12,6 +13,10 @@ describe('guessWord action dispatcher', () => {
     let initialState = {
       secretWordReducer: { secretWord }, giveUpReducer: {
         giveUp: false,
+      },
+      serverErrorReducer: {
+        isServerError: false,
+        message: '',
       },
     };
 
@@ -67,6 +72,10 @@ describe('guessWord action dispatcher', () => {
       guessedWordsReducer: {
         guessedWords,
       },
+      serverErrorReducer: {
+        isServerError: false,
+        message: ''
+      }
     };
 
     let store;
@@ -93,6 +102,10 @@ describe('guessWord action dispatcher', () => {
         giveUpReducer: {
           giveUp: false,
         },
+        serverErrorReducer: {
+          isServerError: false,
+          message: ''
+        }
       };
 
       const newState = store.getState();
@@ -119,6 +132,10 @@ describe('guessWord action dispatcher', () => {
         giveUpReducer: {
           giveUp: false,
         },
+        serverErrorReducer: {
+          isServerError: false,
+          message: ''
+        }
       };
 
       expect(newState).toEqual(expectedState);
