@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NumberOfGuesses } from './NumberOfGuesses';
 import { GivUpMessage } from './GivUpMessage';
 import { NewWordBtn } from './NewWordBtn';
+import { EnterWordForm } from './EnterWordForm';
 
 export const Jotto = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,8 @@ export const Jotto = () => {
       {(success || giveUp) && <NewWordBtn />}
       <Input secretWord={secretWord} />
       <GuessedWords guessedWords={guessedWords} />
-      <NumberOfGuesses numberOfGuesses={guessedWords.length}/>
+      <NumberOfGuesses numberOfGuesses={guessedWords.length} />
+      {(!guessedWords.length || giveUp) && <EnterWordForm />}
     </div>
   );
 };
