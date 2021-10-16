@@ -4,7 +4,7 @@ import { setCustomSecretWord } from '../../../actions';
 
 export const EnterWordForm = () => {
   const dispatch = useDispatch();
-  const [value, setValue] = useState('');
+  const [value, setValue] = React.useState('');
 
   const onInputChange = (e) => setValue(e.currentTarget.value);
   const onBtnClick = (e) => {

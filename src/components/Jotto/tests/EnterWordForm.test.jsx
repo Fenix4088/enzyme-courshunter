@@ -5,15 +5,15 @@ import { EnterWordForm } from '../components/EnterWordForm';
 import { findByTestAttr, storeFactory } from '../../../utils/utilsForTesting';
 import { Jotto } from '../components/Jotto';
 
-const mockSetValue = jest.fn();
-
-jest.mock('react', () => {
-  return {
-    ...jest.requireActual('react'),
-    // useState: (initialState) => [initialState, mockSetValue],
-    useState: jest.fn(),
-  };
-});
+// const mockSetValue = jest.fn();
+//
+// jest.mock('react', () => {
+//   return {
+//     ...jest.requireActual('react'),
+//     // useState: (initialState) => [initialState, mockSetValue],
+//     useState: jest.fn(),
+//   };
+// });
 
 const setUp = (initialState = {}, componentType = 'app') => {
   const store = storeFactory(initialState);
@@ -56,20 +56,20 @@ describe('EnterWordForm', () => {
     let wrapper;
     let mockEvent;
     let mockSetValue = jest.fn();
-    //* let originalState;
+    let originalState;
 
     beforeEach(() => {
       mockSetValue.mockClear();
 
       mockEvent = {currentTarget: {value: 'big'}}
-      //* originalState = React.useState;
-      //* React.useState = jest.fn(() => ['', mockSetValue]);
-      useStateMock.mockImplementation(init => [init, mockSetValue])
+      originalState = React.useState;
+      React.useState = jest.fn(() => ['', mockSetValue]);
+      // useStateMock.mockImplementation(init => [init, mockSetValue])
       wrapper = setUp({}, 'EnterWorForm');
     });
 
     afterEach(() => {
-      //* React.useState = originalState;
+      React.useState = originalState;
     })
 
     it('state updates with value of input box upon change', () => {
