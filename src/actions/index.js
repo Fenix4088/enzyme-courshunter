@@ -75,5 +75,8 @@ export const getSecretWord = () => (dispatch) => {
     dispatch({ type: actionTypes.SET_SECRET_WORD, secretWord: res.data });
   }).catch(e => {
     dispatch(setServerError({status: true, message: e.message}));
+    setTimeout(() => {
+      dispatch(setServerError({status: false, message: ''}));
+    }, 1500)
   });
 };

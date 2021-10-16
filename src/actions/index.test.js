@@ -34,4 +34,40 @@ describe('getSecretWord', () => {
       expect(secretWord).toBe('party');
     });
   });
+
+  describe('updates server error state', () => {
+    it('when server returns status 4xx', () => {
+      const store = storeFactory();
+
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 404,
+          // response: {message: 'User error'}
+        })
+      })
+
+      return store.dispatch(getSecretWord()).then(() => {
+        expect(store.getState().serverErrorReducer.isServerError).toBeTruthy();
+        expect(store.getState().serverErrorReducer.message.length).toBeGreaterThan(0);
+      })
+    });
+
+    it('when server returns status 5xx', () => {
+      const store = storeFactory();
+
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 500
+        })
+      })
+
+      return store.dispatch(getSecretWord()).then(() => {
+        expect(store.getState().serverErrorReducer.isServerError).toBeTruthy();
+        expect(store.getState().serverErrorReducer.message.length).toBeGreaterThan(0);
+      })
+
+    })
+  })
 });
