@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Congrats from './Congrats';
 import GuessedWords from './GuessedWords';
 import Input from './Input';
 import { getSecretWord } from '../../../actions';
+import { Spinner } from './Spinner';
 
 /**
  *
@@ -16,7 +17,7 @@ import { getSecretWord } from '../../../actions';
 const reducer = (state, action) => {
   switch (action.type) {
     case 'setSecretWord':
-      return {...state, secretWord: action.payload}
+      return { ...state, secretWord: action.payload };
     default:
       return state;
   }
@@ -25,28 +26,29 @@ const reducer = (state, action) => {
 
 export const Jotto = () => {
   const [state, dispatch] = React.useReducer(reducer, {
-    secretWord: '',
+    secretWord: null,
   });
 
-  const setSecretWord = (secretWord) => dispatch({type: 'setSecretWord', payload: secretWord})
+  const setSecretWord = (secretWord) => dispatch({ type: 'setSecretWord', payload: secretWord });
 
   useEffect(() => {
     getSecretWord(setSecretWord);
   }, []);
 
-  const [jottoState, setJottoState] = useState({
-    success: false,
-    guessedWords: [],
-  });
+  const { secretWord } = state;
 
-  const { success, guessedWords } = jottoState;
 
   return (
-    <div data-test={'jotto-app'}>
-      <h1>Jotto</h1>
-      <Congrats success={success} />
-      <Input secretWord={state.secretWord} success={success} />
-      <GuessedWords guessedWords={guessedWords} />
-    </div>
+    <>
+      {
+        secretWord ? (<div data-test={'jotto-app'}>
+          <h1>Jotto</h1>
+          <Congrats success={false} />
+          <Input secretWord={secretWord} success={false} />
+          <GuessedWords guessedWords={[]} />
+        </div>) : <Spinner />
+      }
+    </>
   );
 };
+

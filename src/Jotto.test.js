@@ -1,24 +1,52 @@
-import { findByTestAttr } from './utils/utilsForTesting';
+import React from 'react';
 import { mount } from 'enzyme';
 import { getSecretWord as mockGetSecretWord } from './actions';
 import { Jotto } from './components/Jotto/components/Jotto';
+import { findByTestAttr } from './utils/utilsForTesting';
 
 //activate global mock to make sure getSecretWord dosen't make network call
 jest.mock('./actions');
 
 const setUp = () => mount(<Jotto />);
 
-describe('app', () => {
-  let wrapper;
-  beforeEach(() => {
-    wrapper = setUp();
-  });
+describe.each([
+  [null, true, false],
+  ['party', false, true]
+])(
+  'renders with secretWord as %s', (secretWord, loadingShows, appShows) => {
+    let wrapper;
+    let originalUseReducer;
 
-  it('renders without error', () => {
-    const app = findByTestAttr(wrapper, 'jotto-app');
-    expect(app).toHaveLength(1);
-  });
-});
+    beforeEach(() => {
+      originalUseReducer = React.useReducer;
+      const mockUseReducer = jest.fn()
+        .mockReturnValue([
+          { secretWord },
+          jest.fn()
+        ])
+
+      React.useReducer = mockUseReducer;
+
+      wrapper = setUp();
+    });
+
+    afterEach(() => {
+      React.useReducer = originalUseReducer;
+    })
+
+    it(`renders loading spinner: ${loadingShows}`, () => {
+        const spinner = findByTestAttr(wrapper, 'spinner');
+
+        expect(spinner.exists()).toBe(loadingShows);
+    });
+
+    it(`renders app: ${appShows}`, () => {
+        const app = findByTestAttr(wrapper, 'jotto-app');
+
+        expect(app.exists()).toBe(appShows);
+    });
+  }
+);
 
 describe('get secret word', () => {
 
