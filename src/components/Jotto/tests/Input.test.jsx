@@ -72,7 +72,7 @@ describe('Input comp', () => {
   describe('state controlled input field', () => {
     let wrapper;
     let mockEvent;
-    let mockEmptyEvent;
+    // let mockEmptyEvent;
     let mockSetCurrentGuess = jest.fn();
     let originalState;
 
@@ -80,7 +80,7 @@ describe('Input comp', () => {
       mockSetCurrentGuess.mockClear();
 
       mockEvent = { target: { value: 'train' } };
-      mockEmptyEvent = { target: { value: ' ' } };
+      // mockEmptyEvent = { target: { value: ' ' } };
       originalState = React.useState;
       React.useState = jest.fn(() => ['', mockSetCurrentGuess]);
       wrapper = setup({ successReducer: { success: false } });
@@ -112,21 +112,28 @@ describe('Input comp', () => {
         },
       });
 
-      expect(mockSetCurrentGuess).toHaveBeenCalledWith('train');
+      expect(mockSetCurrentGuess).toHaveBeenCalledWith('');
     });
 
-    // it('should not invoke on submitClick if input value is false', () => {
-    //   mockSetCurrentGuess.mockClear(); // ??
-    //
+    // it('should not change state if input value is empty string', () => {
+    //   const mockDispatch = jest.fn();
+    //   jest.mock('react-redux', () => {
+    //     return {
+    //       ...jest.requireActual('react-redux'),
+    //       useDispatch: () => mockDispatch
+    //     }
+    //   })
     //   const inputBox = findByTestAttr(wrapper, 'input-box');
-    //   inputBox.simulate('change', mockEmptyEvent);
+    //   inputBox.simulate('change', mockEvent);
+    //   // mockDispatch.mockClear();
     //
     //   const submitBtn = findByTestAttr(wrapper, 'submit-button');
+    //
     //   submitBtn.simulate('click', {
-    //     preventDefault: () => {}
+    //     preventDefault: () => {},
     //   })
     //
-    //   expect(mockSetCurrentGuess).toHaveBeenCalledTimes(0)
+    //   expect(mockDispatch).toHaveBeenCalledTimes(0);
     // });
   });
 

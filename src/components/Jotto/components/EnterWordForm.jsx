@@ -9,18 +9,18 @@ export const EnterWordForm = () => {
   const onInputChange = (e) => setValue(e.currentTarget.value);
   const onBtnClick = (e) => {
     e.preventDefault();
-    if (!value.trim()) return;
-    dispatch(setCustomSecretWord(value));
     setValue('');
+    // if (!value.trim()) return;
+    dispatch(setCustomSecretWord(value));
   };
 
   return (
     <div style={{ marginTop: '20px' }}>
       <div className='input-group mb-3' style={{ marginBottom: '10px' }}>
-        <input value={value} type='text' className='form-control' aria-label='Default'
+        <input data-test={'enter-secret-word-field'} value={value} type='text' className='form-control' aria-label='Default'
                aria-describedby='inputGroup-sizing-default' onChange={onInputChange} />
       </div>
-      <button className='btn btn-primary mb-2' onClick={onBtnClick}>Set custom word</button>
+      <button data-test={'enter-secret-word-btn'} className='btn btn-primary mb-2' onClick={onBtnClick}>Set custom word</button>
     </div>
   );
 };

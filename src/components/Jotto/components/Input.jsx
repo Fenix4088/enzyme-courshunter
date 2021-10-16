@@ -12,6 +12,13 @@ function Input({ secretWord }) {
   const giveUp = useSelector(state => state.giveUpReducer.giveUp);
   const guessedWords = useSelector(state => state.guessedWordsReducer.guessedWords);
 
+  const clickHandler = (e) => {
+    e.preventDefault();
+
+    setCurrentGuess('');
+    if (!currentGuess.trim()) return;
+    dispatch(guessWord(currentGuess));
+  };
 
 
   if (success) {
@@ -32,14 +39,7 @@ function Input({ secretWord }) {
           />
           <button
             data-test='submit-button'
-            onClick={(evt) => {
-              evt.preventDefault();
-              //TODO: how to test this condition
-              if (!currentGuess.trim()) return;
-
-              dispatch(guessWord(currentGuess));
-              setCurrentGuess('');
-            }}
+            onClick={clickHandler}
             className='btn btn-primary mb-2'
           >
             Submit
