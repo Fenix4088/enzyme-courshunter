@@ -5,18 +5,18 @@ import Input from './Input';
 import { getSecretWord } from '../../../actions';
 
 export const Jotto = () => {
+  const [secretWord, setSecretWord] = useState('');
 
   useEffect(() => {
-    getSecretWord();
+    getSecretWord(setSecretWord);
   }, []);
 
   const [jottoState, setJottoState] = useState({
     success: false,
-    secretWord: 'party',
     guessedWords: [],
   });
 
-  const { success, secretWord, guessedWords } = jottoState;
+  const { success, guessedWords } = jottoState;
 
   return (
     <div data-test={'jotto-app'}>
