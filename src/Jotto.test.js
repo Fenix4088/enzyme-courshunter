@@ -10,10 +10,10 @@ jest.mock('./actions');
 const setUp = () => mount(<Jotto />);
 
 describe.each([
-  [null, true, false],
-  ['party', false, true]
+  [null, 'en', true, false],
+  ['party', 'en', false, true]
 ])(
-  'renders with secretWord as %s', (secretWord, loadingShows, appShows) => {
+  'renders with secretWord as %s', (secretWord, language, loadingShows, appShows) => {
     let wrapper;
     let originalUseReducer;
 
@@ -21,7 +21,7 @@ describe.each([
       originalUseReducer = React.useReducer;
       const mockUseReducer = jest.fn()
         .mockReturnValue([
-          { secretWord },
+          { secretWord, language },
           jest.fn()
         ])
 

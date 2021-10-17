@@ -43,7 +43,6 @@ export const Jotto = () => {
   }, []);
 
   const { secretWord, language } = state;
-
   return (
     <>
       {

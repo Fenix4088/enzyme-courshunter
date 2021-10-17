@@ -1,6 +1,8 @@
 import React from 'react';
-import { findByTestAttr, setUp } from '../../../utils/utilsForTesting';
+import { findByTestAttr } from '../../../utils/utilsForTesting';
 import Input from '../components/Input';
+import { mount } from 'enzyme';
+import languageContext from '../../../contexts/languageContext';
 
 // ? This mock section if you want to import your react hooks and destructure them
 // ? while importing like => import React, {useState} from 'react';
@@ -11,16 +13,42 @@ import Input from '../components/Input';
 //   useState: (initialState) => [initialState, mockSetCurrentGuess],
 // }));
 
+const setUp = ({ success, language, secretWord }) => {
+  success = success || false;
+  language = language || 'en';
+  secretWord = secretWord || 'party';
+  return mount(
+    <languageContext.Provider value={language}>
+      <Input success={success} secretWord={secretWord} />
+    </languageContext.Provider>
+  );
+};
+
 describe('Input comp', () => {
 
+  describe('languagePicker', () => {
 
+    it('should correct renders submit btn on english', () => {
+      const wrapper = setUp({ language: 'en' });
+      const submitBtn = findByTestAttr(wrapper, 'submit-button');
+
+      expect(submitBtn.text()).toBe('Submit');
+    });
+
+    it('should correct renders submit btn on emoji', () => {
+      const wrapper = setUp({ language: 'emoji' });
+      const submitBtn = findByTestAttr(wrapper, 'submit-button');
+
+      expect(submitBtn.text()).toBe('🚀');
+    });
+  });
 
   describe('render', () => {
     describe('success is true', () => {
 
       let wrapper;
       beforeEach(() => {
-        wrapper = setUp(Input, { secretWord: 'party', success: true });
+        wrapper = setUp({ success: true });
       });
 
       it('should renders without errors', function() {
@@ -30,13 +58,13 @@ describe('Input comp', () => {
       });
 
       it('input box should be hidden', () => {
-          const inputBox = findByTestAttr(wrapper, 'input-box');
-          expect(inputBox.exists()).toBeFalsy();
+        const inputBox = findByTestAttr(wrapper, 'input-box');
+        expect(inputBox.exists()).toBeFalsy();
       });
 
       it('submit btn should be hidden', () => {
         const submitBtn = findByTestAttr(wrapper, 'submit-button');
-         expect(submitBtn.exists()).toBeFalsy();
+        expect(submitBtn.exists()).toBeFalsy();
       });
 
     });
@@ -44,7 +72,7 @@ describe('Input comp', () => {
     describe('success is false', () => {
       let wrapper;
       beforeEach(() => {
-        wrapper = setUp(Input, { secretWord: 'party', success: false });
+        wrapper = setUp({ success: false });
       });
 
       it('input box should be hidden', () => {
@@ -58,7 +86,7 @@ describe('Input comp', () => {
       });
 
     });
-  })
+  });
 
   describe('state controlled input field', () => {
     let wrapper;
@@ -72,12 +100,12 @@ describe('Input comp', () => {
       mockEvent = { target: { value: 'train' } };
       originalState = React.useState;
       React.useState = jest.fn(() => ['', mockSetCurrentGuess]);
-      wrapper = setUp(Input, { secretWord: 'party' });
+      wrapper = setUp({ secretWord: 'party' });
     });
 
     afterEach(() => {
       React.useState = originalState;
-    })
+    });
 
     it('state updates with value of input box upon change', () => {
       //? const mockSetCurrentGuess = jest.fn(); // her you mock a jest if your imports inside components are like => React.useState
