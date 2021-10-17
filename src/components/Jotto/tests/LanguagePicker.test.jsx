@@ -10,23 +10,24 @@ const setup = () => {
 }
 
 describe('Language picker comp', () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = setup();
+  });
 
   it('should renders without errors', () => {
-    const wrapper = setup();
     const component = findByTestAttr(wrapper, 'component-language-picker');
 
     expect(component.exists()).toBeTruthy();
   });
 
   it('renders non-zero language icons', () => {
-    const wrapper = setup();
     const languageIcons = findByTestAttr(wrapper, 'language-icon');
 
     expect(languageIcons.length).toBeGreaterThan(0);
   });
 
   it('set lang prop upon click', () => {
-    const wrapper = setup();
     const languageIcons = findByTestAttr(wrapper, 'language-icon');
 
     const firstIcon = languageIcons.first();
