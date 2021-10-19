@@ -1,5 +1,8 @@
-import { findByTestAttr, setUp } from '../../../utils/utilsForTesting';
+import React from 'react';
+// import React, {useContext as mockUseContext} from 'react'; //! without destructuring
+import { findByTestAttr } from '../../../utils/utilsForTesting';
 import GuessedWords from '../components/GuessedWords';
+import { shallow } from 'enzyme';
 
 const defaultProps = {
   guessedWords: [
@@ -10,6 +13,18 @@ const defaultProps = {
   ],
 };
 
+const setUp = (props = {}) => {
+  const setUpProps = {...defaultProps, ...props};
+  return shallow(<GuessedWords {...setUpProps}/>);
+}
+//! without destructuring
+// jest.mock('react', () => {
+//   return {
+//     ...jest.requireActual('react'),
+//     useContext: jest.fn().mockReturnValueOnce('en').mockReturnValueOnce('emoji')
+//   }
+// });
+
 describe('GuessedWords component', () => {
 
   describe('if there are no words guessed', () => {
@@ -17,7 +32,7 @@ describe('GuessedWords component', () => {
     let wrapper;
 
     beforeEach(() => {
-      wrapper = setUp(GuessedWords, defaultProps, { guessedWords: [] });
+      wrapper = setUp({ guessedWords: [] });
     });
 
     it('if there no words guessed', () => {
@@ -53,7 +68,7 @@ describe('GuessedWords component', () => {
 
     let wrapper;
     beforeEach(() => {
-      wrapper = setUp(GuessedWords, defaultProps, { guessedWords });
+      wrapper = setUp({ guessedWords });
     });
 
     it('renders "guessed words" section', () => {
@@ -69,5 +84,37 @@ describe('GuessedWords component', () => {
     });
   });
 
+  describe('languagePicker', () => {
+    // ? In this case we MOCK useContext hook in contrast to Input.test.js
+    // ? in Input.test.js we used an Provider pattern (mount component wrapped into Provide)
+    // ? Here we make a shallow copy of the component it is make test more isolated, but in this case
+    // ? we should to mock a useContext hook with a returned value
+
+    //! without destructuring
+    // afterEach(() => {
+    //   mockUseContext.mockClear();
+    // })
+
+    it('should correctly renders guess instructions in English by default', () => {
+      //! mockUseContext.mockReturnValue('en'); // without destructuring
+      const wrapper = setUp({guessedWords: []});
+      const guessInstruction = findByTestAttr(wrapper, 'guess-instructions');
+
+      expect(guessInstruction.text()).toBe('Try to guess the secret word!');
+    });
+
+    it('should correctly renders guess instructions in emoji by default', () => {
+      //! mockUseContext.mockReturnValue('emoji'); // without destructuring
+
+      const mockUseContext = jest.fn().mockReturnValue('emoji');
+      React.useContext = mockUseContext;
+
+      const wrapper = setUp({guessedWords: []});
+
+      const guessInstruction = findByTestAttr(wrapper, 'guess-instructions');
+
+      expect(guessInstruction.text()).toBe('🤔🤫🔤')
+    });
+  })
 })
 ;
