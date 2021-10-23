@@ -16,7 +16,7 @@ import GuessedWords from '../components/GuessedWords';
  * @param {Array.<{guessedWord: string, letterMatchCount: number}>} guessedWords
  * @returns {JSX.Element}
  */
-const setUp = ({secretWord, guessedWords }) => {
+const setUp = ({ secretWord, success, guessedWords }) => {
   const wrapper = mount(
     <GuessedWordsProvider>
       <SuccessProvider>
@@ -24,7 +24,7 @@ const setUp = ({secretWord, guessedWords }) => {
         <Input secretWord={secretWord} success={false} />
       </SuccessProvider>
       <GuessedWords />
-    </GuessedWordsProvider>
+    </GuessedWordsProvider>,
   );
 
   //add value to input box
@@ -41,12 +41,16 @@ const setUp = ({secretWord, guessedWords }) => {
   guessedWords.map(guess => {
     const mockEvent = { target: { value: guess.guessedWord } };
     inputBox.simulate('change', mockEvent);
-  })
+    submitBtn.simulate('click', {
+      preventDefault: () => {
+      },
+    });
+  });
 
   return wrapper;
 };
 
-describe.skip('no words guessed', () => {
+describe('no words guessed', () => {
 
   let wrapper;
   beforeEach(() => {
@@ -61,7 +65,7 @@ describe.skip('no words guessed', () => {
 
 });
 
-describe.skip('some words guessed', () => {
+describe('some words guessed', () => {
   let wrapper;
   let guessedWords = [
     {
@@ -80,7 +84,7 @@ describe.skip('some words guessed', () => {
   it('should creates GuessedWords table with two rows', () => {
     const guessedWordsRows = findByTestAttr(wrapper, 'guessed-word');
 
-    expect(guessedWordsRows.length).toStrictEqual(guessedWords.length);
+    expect(guessedWordsRows.length).toStrictEqual(guessedWords.length + 1);
 
   });
 
@@ -94,7 +98,7 @@ describe.skip('some words guessed', () => {
 
 });
 
-describe.skip('guess secret word', () => {
+describe('guess secret word', () => {
   let wrapper;
   let guessedWords = [
     {
@@ -107,22 +111,24 @@ describe.skip('guess secret word', () => {
     wrapper = setUp({
       secretWord: 'party',
       success: false,
-      guessedWords: guessedWords,
+      guessedWords,
     });
 
     // add value to input box
     const inputBox = findByTestAttr(wrapper, 'input-box');
-    inputBox.simulate('change', { target: { value: 'party' }});
+    inputBox.simulate('change', { target: { value: 'party' } });
 
     //simulate click on submit btn
     const submitBtn = findByTestAttr(wrapper, 'submit-button');
     submitBtn.simulate('click', {
-      preventDefault: () => {}
-    })
+      preventDefault: () => {
+      },
+    });
   });
 
   it('should add word to guessed table', () => {
-    const guessedRows = findByTestAttr(wrapper, 'guessed-words');
+    console.log(wrapper.debug());
+    const guessedRows = findByTestAttr(wrapper, 'guessed-word');
     expect(guessedRows).toHaveLength(3);
   });
 
