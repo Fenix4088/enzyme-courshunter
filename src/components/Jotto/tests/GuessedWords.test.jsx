@@ -2,8 +2,8 @@ import React from 'react';
 // import React, {useContext as mockUseContext} from 'react'; //! without destructuring
 import { findByTestAttr } from '../../../utils/utilsForTesting';
 import GuessedWords from '../components/GuessedWords';
-import { mount } from 'enzyme';
-import { GuessedWordsProvider } from '../../../contexts/guessedWordContex';
+import { shallow } from 'enzyme';
+import { useGuessedWords} from '../../../contexts/guessedWordContex';
 
 const defaultProps = {
   guessedWords: [
@@ -14,13 +14,18 @@ const defaultProps = {
   ],
 };
 
+jest.mock('../../../contexts/guessedWordContex', () => {
+  return {
+    ...jest.requireActual('../../../contexts/guessedWordContex'),
+    useGuessedWords: jest.fn()
+  }
+})
+
 const setUp = (guessedWords = []) => {
-  // const setUpProps = {...defaultProps, ...props};
-  return mount(
-    <GuessedWordsProvider value={[guessedWords, jest.fn()]}>
-      <GuessedWords/>
-    </GuessedWordsProvider>
-  );
+  // const mockUseGuessedWords = jest.fn().mockReturnValue([guessedWords, jest.fn()]);
+  // useGuessedWords = mockUseGuessedWords;
+  useGuessedWords.mockReturnValue([guessedWords, jest.fn()])
+  return shallow(<GuessedWords/>);
 }
 //! without destructuring
 // jest.mock('react', () => {

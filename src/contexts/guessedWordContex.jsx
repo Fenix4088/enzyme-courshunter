@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 export const guessedWordContext = React.createContext();
 
-export const useGuessedWords = () => {
+export let useGuessedWords = () => {
   const context = useContext(guessedWordContext);
 
   if(!context) {
