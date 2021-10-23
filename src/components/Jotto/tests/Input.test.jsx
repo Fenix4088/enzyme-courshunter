@@ -3,6 +3,7 @@ import { findByTestAttr } from '../../../utils/utilsForTesting';
 import Input from '../components/Input';
 import { mount } from 'enzyme';
 import languageContext from '../../../contexts/languageContext';
+import { SuccessProvider } from '../../../contexts/successContext';
 
 // ? This mock section if you want to import your react hooks and destructure them
 // ? while importing like => import React, {useState} from 'react';
@@ -19,7 +20,9 @@ const setUp = ({ success, language, secretWord }) => {
   secretWord = secretWord || 'party';
   return mount(
     <languageContext.Provider value={language}>
-      <Input success={success} secretWord={secretWord} />
+      <SuccessProvider value={[success, jest.fn()]}>
+        <Input secretWord={secretWord} />
+      </SuccessProvider>
     </languageContext.Provider>
   );
 };

@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import languageContext from '../../../contexts/languageContext';
 import stringsModule from '../../../helpers/strings';
+import { useSuccess } from '../../../contexts/successContext';
 
 const { getStringByLanguage } = stringsModule;
 
-function Input({ success, secretWord }) {
+function Input({ secretWord }) {
   const language = React.useContext(languageContext);
+  const [success] = useSuccess();
   const [currentGuess, setCurrentGuess] = React.useState('');
 
   if (success) {
@@ -42,6 +44,5 @@ function Input({ success, secretWord }) {
 
 Input.propTypes = {
   secretWord: PropTypes.string.isRequired,
-  success: PropTypes.bool.isRequired,
 };
 export default Input;

@@ -1,13 +1,31 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { Jotto } from '../components/Jotto';
 import { findByTestAttr } from '../../../utils/utilsForTesting';
+import { GuessedWordsProvider } from '../../../contexts/guessedWordContex';
+import { SuccessProvider } from '../../../contexts/successContext';
+import Congrats from '../components/Congrats';
+import Input from '../components/Input';
+import GuessedWords from '../components/GuessedWords';
 
 
 //! THIS IS NOT UNIT BUT FUNCTIONAL TEST BECAUSE WE MOUNT WHOLE COMPONENT
 
-const setUp = (state = {}) => {
-  const wrapper = mount(<Jotto {...state} />);
+/**
+ * @param {string} secretWord
+ * @param {boolean} success
+ * @param {Array.<{guessedWord: string, letterMatchCount: number}>} guessedWords
+ * @returns {JSX.Element}
+ */
+const setUp = ({secretWord, guessedWords }) => {
+  const wrapper = mount(
+    <GuessedWordsProvider>
+      <SuccessProvider>
+        <Congrats />
+        <Input secretWord={secretWord} success={false} />
+      </SuccessProvider>
+      <GuessedWords />
+    </GuessedWordsProvider>
+  );
 
   //add value to input box
   const inputBox = findByTestAttr(wrapper, 'input-box');
@@ -19,6 +37,11 @@ const setUp = (state = {}) => {
     preventDefault: () => {
     },
   });
+
+  guessedWords.map(guess => {
+    const mockEvent = { target: { value: guess.guessedWord } };
+    inputBox.simulate('change', mockEvent);
+  })
 
   return wrapper;
 };

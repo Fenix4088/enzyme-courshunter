@@ -1,5 +1,4 @@
 import React from 'react';
-// import React, {useContext as mockUseContext} from 'react'; //! without destructuring
 import { findByTestAttr } from '../../../utils/utilsForTesting';
 import GuessedWords from '../components/GuessedWords';
 import { shallow } from 'enzyme';
@@ -34,7 +33,6 @@ const setUp = (guessedWords = []) => {
 // });
 
 describe('GuessedWords component', () => {
-
   describe('if there are no words guessed', () => {
     let wrapper;
 
@@ -123,5 +121,4 @@ describe('GuessedWords component', () => {
       expect(guessInstruction.text()).toBe('🤔🤫🔤')
     });
   })
-})
-;
+});

@@ -55,7 +55,7 @@ export const Jotto = () => {
             <GuessedWordsProvider>
               <SuccessProvider>
                 <Congrats />
-                <Input secretWord={secretWord} success={false} />
+                <Input secretWord={secretWord}/>
               </SuccessProvider>
               <GuessedWords />
             </GuessedWordsProvider>
