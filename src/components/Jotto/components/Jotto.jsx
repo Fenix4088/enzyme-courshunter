@@ -50,6 +50,7 @@ export const Jotto = () => {
       {
         secretWord ? (<div data-test={'jotto-app'}>
           <h1>Jotto</h1>
+          <div>hint: {secretWord}</div>
           <languageContext.Provider value={language}>
             <LanguagePicker setLanguage={setLanguage} />
             <GuessedWordsProvider>

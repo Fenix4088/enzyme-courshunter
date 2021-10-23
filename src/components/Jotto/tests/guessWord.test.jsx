@@ -85,7 +85,6 @@ describe('some words guessed', () => {
     const guessedWordsRows = findByTestAttr(wrapper, 'guessed-word');
 
     expect(guessedWordsRows.length).toStrictEqual(guessedWords.length + 1);
-
   });
 
   it('should input box and submit btn to be visible', () => {
