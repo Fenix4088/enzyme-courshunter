@@ -1,6 +1,6 @@
 import React from 'react';
 
-const successContext = React.createContext();
+export const successContext = React.createContext();
 
 
 /**

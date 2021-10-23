@@ -1,7 +1,8 @@
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import Congrats from '../components/Congrats';
 import { findByTestAttr } from '../../../utils/utilsForTesting';
 import languageContext from '../../../contexts/languageContext';
+import { SuccessProvider } from '../../../contexts/successContext';
 
 /**
  *
@@ -13,24 +14,29 @@ const setUp = ({ success, language }) => {
   language = language || 'en';
   success = success || false;
 
-  return mount(<languageContext.Provider value={language}><Congrats success={success} /></languageContext.Provider>);
+  return mount(
+    <languageContext.Provider value={language}>
+      <SuccessProvider value={[success, jest.fn()]}>
+        <Congrats />
+      </SuccessProvider>
+  </languageContext.Provider>);
 };
 
 describe('languagePicker', () => {
   it('should correctly renders congrats string in en', () => {
-    const wrapper = setUp({success: true});
-    const congratsMessage = findByTestAttr(wrapper, 'congrats-message')
+    const wrapper = setUp({ success: true });
+    const congratsMessage = findByTestAttr(wrapper, 'congrats-message');
 
     expect(congratsMessage.text()).toBe('Congratulations! You guessed the word!');
   });
 
   it('should correctly renders congrats string in emoji', () => {
-    const wrapper = setUp({success: true, language: 'emoji'});
-    const congratsMessage = findByTestAttr(wrapper, 'congrats-message')
+    const wrapper = setUp({ success: true, language: 'emoji' });
+    const congratsMessage = findByTestAttr(wrapper, 'congrats-message');
 
     expect(congratsMessage.text()).toBe('🎯🎉');
   });
-})
+});
 
 describe('Congrats component', () => {
 
@@ -46,11 +52,11 @@ describe('Congrats component', () => {
     const component = findByTestAttr(wrapperTruthy, 'component-congrats');
     expect(component.length).toBe(1);
   });
-  it('renders no text when `success` prop is false', () => {
+  it('renders no text when `success`  is false', () => {
     const component = findByTestAttr(wrapperFalsy, 'component-congrats');
     expect(component.text()).toBe('');
   });
-  it('renders non-empty congrats message when `success` prop is true', () => {
+  it('renders non-empty congrats message when `success`  is true', () => {
     const message = findByTestAttr(wrapperTruthy, 'congrats-message');
     expect(message.text().length).not.toBe(0);
   });

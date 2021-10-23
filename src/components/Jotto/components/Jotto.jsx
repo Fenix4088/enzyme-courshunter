@@ -6,6 +6,7 @@ import { getSecretWord } from '../../../actions';
 import { Spinner } from './Spinner';
 import languageContext from '../../../contexts/languageContext';
 import LanguagePicker from './LanguagePicker';
+import { SuccessProvider } from '../../../contexts/successContext';
 
 
 /**
@@ -50,7 +51,9 @@ export const Jotto = () => {
           <h1>Jotto</h1>
           <languageContext.Provider value={language}>
             <LanguagePicker setLanguage={setLanguage}/>
-            <Congrats success={false} />
+            <SuccessProvider>
+              <Congrats/>
+            </SuccessProvider>
             <Input secretWord={secretWord} success={false} />
             <GuessedWords guessedWords={[]} />
           </languageContext.Provider>
