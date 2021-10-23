@@ -22,8 +22,6 @@ jest.mock('../../../contexts/guessedWordContex', () => {
 })
 
 const setUp = (guessedWords = []) => {
-  // const mockUseGuessedWords = jest.fn().mockReturnValue([guessedWords, jest.fn()]);
-  // useGuessedWords = mockUseGuessedWords;
   useGuessedWords.mockReturnValue([guessedWords, jest.fn()])
   return shallow(<GuessedWords/>);
 }
