@@ -7,6 +7,7 @@ import { Spinner } from './Spinner';
 import languageContext from '../../../contexts/languageContext';
 import LanguagePicker from './LanguagePicker';
 import { SuccessProvider } from '../../../contexts/successContext';
+import { GuessedWordsProvider } from '../../../contexts/guessedWordContex';
 
 
 /**
@@ -55,7 +56,9 @@ export const Jotto = () => {
               <Congrats/>
             </SuccessProvider>
             <Input secretWord={secretWord} success={false} />
-            <GuessedWords guessedWords={[]} />
+            <GuessedWordsProvider>
+              <GuessedWords />
+            </GuessedWordsProvider>
           </languageContext.Provider>
         </div>) : <Spinner />
       }
